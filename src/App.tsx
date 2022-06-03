@@ -1,44 +1,25 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { ReactNode } from "react"
 
-function App() {
-  const [count, setCount] = useState(0)
+type ButtonProps = {
+  text?: string
+}
 
+function Button ({ text = 'Default' }: ButtonProps) {
+  return <button className="bg-violet-500 text-violet-100 p-2 h-10 rounded hover:bg-violet-700 transition-colors">
+    {text}
+  </button>
+}
+
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <>
+      <h1>Feedget</h1> 
+      <div className="flex gap-2">
+        <Button text='Enviar' />
+        <Button text='Ok' />
+        <Button  />
+      </div>
+    </>
   )
 }
 
