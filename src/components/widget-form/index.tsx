@@ -5,7 +5,7 @@ import { CloseButton } from "../close-button";
 import bugImageUrl from '../../assets/bug.svg'
 import ideaImageUrl from '../../assets/idea.svg'
 import otherImageUrl from '../../assets/other.svg'
-import { FeedbackTypesStep } from "./steps";
+import { FeedbackContentStep, FeedbackTypesStep } from "./steps";
 
 export const feedbackTypes = {
   BUG: {
@@ -40,13 +40,10 @@ export function WidgetForm () {
     setFeedbackType(type)
   }
 
-  return (
-    <div className="w-[calc(100vw-2rem)] md:w-auto bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg">
-      <header>
-        <span className="text-xl leading-6">Deixe seu feedback</span>
+  const handleFeedbackRestart = () => setFeedbackType(null)
 
-        <CloseButton />
-      </header>
+  return (
+    <div className="bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto">
 
       {!feedbackType && (
         <FeedbackTypesStep
@@ -54,7 +51,12 @@ export function WidgetForm () {
         />
       )}
 
-      {feedbackType && <p>Hello World</p>}
+      {feedbackType && (
+        <FeedbackContentStep
+          feedbackType={feedbackType}
+          onFeedbackRestartRequested={handleFeedbackRestart}
+        />
+      )}
 
       <footer className="text-xs text-neutral-400">
         Feito com ♥ pela <a href="https://www.rocketseat.com.br/" className="underline underline-offset-2">Rocketseat</a>
