@@ -19,7 +19,7 @@ export function FeedbackContentStep ({
   const [screenshot, setScreenshot] = useState<string | null>(null)
   const feedbackTypeInfo = feedbackTypes[feedbackType]
 
-  const handleScreenshotTook = (screenshot: string) => {
+  const handleScreenshotTook = (screenshot: string | null) => {
     setScreenshot(screenshot)
   }
 
@@ -50,7 +50,10 @@ export function FeedbackContentStep ({
         />
 
         <footer className="flex gap-2 mt-3">
-          <ScreenshotButton onScreenshotTook={handleScreenshotTook} />
+          <ScreenshotButton
+            screenshot={screenshot}
+            onScreenshotTook={handleScreenshotTook}
+          />
 
           <button
             type="submit"
