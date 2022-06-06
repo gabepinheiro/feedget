@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import { CloseButton } from "../close-button";
 
-import bugImageUrl from '../assets/bug.svg'
-import ideaImageUrl from '../assets/idea.svg'
-import otherImageUrl from '../assets/other.svg'
+import bugImageUrl from '../../assets/bug.svg'
+import ideaImageUrl from '../../assets/idea.svg'
+import otherImageUrl from '../../assets/other.svg'
 import { FeedbackTypesStep } from "./steps";
 
 export const feedbackTypes = {
@@ -36,6 +36,10 @@ export type FeedbackType = keyof typeof feedbackTypes
 export function WidgetForm () {
   const [feedbackType, setFeedbackType] = useState<FeedbackType | null>(null)
 
+  const handleFeedbackTypesChanged = (type: FeedbackType) => {
+    setFeedbackType(type)
+  }
+
   return (
     <div className="w-[calc(100vw-2rem)] md:w-auto bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg">
       <header>
@@ -44,7 +48,11 @@ export function WidgetForm () {
         <CloseButton />
       </header>
 
-      {!feedbackType && <FeedbackTypesStep />}
+      {!feedbackType && (
+        <FeedbackTypesStep
+          onFeedbackTypesChanged={handleFeedbackTypesChanged}
+        />
+      )}
 
       {feedbackType && <p>Hello World</p>}
 
