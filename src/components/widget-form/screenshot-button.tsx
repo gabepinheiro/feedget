@@ -6,7 +6,11 @@ import { Camera } from "phosphor-react";
 
 import { Loading } from '../loading'
 
-export function ScreenshotButton () {
+type Props = {
+  onScreenshotTook: (screenshot: string) => void
+}
+
+export function ScreenshotButton ({ onScreenshotTook }: Props) {
   const [isTakingScreenshot, setIsTakingScreenshot] = useState(false)
 
   const handleTakeScreenshot = async () => {
@@ -15,7 +19,7 @@ export function ScreenshotButton () {
     const canvas = await html2canvas(document.querySelector('html')!)
     const base64Image = canvas.toDataURL('image/png')
 
-    console.log(base64Image)
+    onScreenshotTook(base64Image)
 
     setTimeout(() => {
       setIsTakingScreenshot(false)
