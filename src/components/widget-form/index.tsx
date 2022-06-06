@@ -5,7 +5,7 @@ import { CloseButton } from "../close-button";
 import bugImageUrl from '../../assets/bug.svg'
 import ideaImageUrl from '../../assets/idea.svg'
 import otherImageUrl from '../../assets/other.svg'
-import { FeedbackContentStep, FeedbackTypesStep } from "./steps";
+import { FeedbackContentStep, FeedbackSucessStep, FeedbackTypesStep } from "./steps";
 
 export const feedbackTypes = {
   BUG: {
@@ -35,27 +35,37 @@ export type FeedbackType = keyof typeof feedbackTypes
 
 export function WidgetForm () {
   const [feedbackType, setFeedbackType] = useState<FeedbackType | null>(null)
+  const [feedbackSent, setFeedbackSent] = useState(false)
 
   const handleFeedbackTypesChanged = (type: FeedbackType) => {
     setFeedbackType(type)
   }
 
-  const handleFeedbackRestart = () => setFeedbackType(null)
+  const handleFeedbackRestart = () => {
+    setFeedbackSent(false)
+    setFeedbackType(null)
+  }
+
+  const handleFeedbackSent = () => setFeedbackSent(true)
 
   return (
     <div className="bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto">
-
       {!feedbackType && (
         <FeedbackTypesStep
           onFeedbackTypesChanged={handleFeedbackTypesChanged}
         />
       )}
 
-      {feedbackType && (
+      {feedbackType && !feedbackSent && (
         <FeedbackContentStep
           feedbackType={feedbackType}
           onFeedbackRestartRequested={handleFeedbackRestart}
+          onFeedbackSent={handleFeedbackSent}
         />
+      )}
+
+      {feedbackSent && feedbackType && (
+        <FeedbackSucessStep onFeedbackRestartRequested={handleFeedbackRestart} />
       )}
 
       <footer className="text-xs text-neutral-400">
