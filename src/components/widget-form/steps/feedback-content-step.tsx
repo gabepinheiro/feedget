@@ -1,7 +1,7 @@
 import { CloseButton } from "../../close-button"
 import { ArrowLeft } from "phosphor-react"
 
-import { useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 
 import  { FeedbackType, feedbackTypes } from '../'
 
@@ -18,9 +18,23 @@ export function FeedbackContentStep ({
 }: Props) {
   const [screenshot, setScreenshot] = useState<string | null>(null)
   const feedbackTypeInfo = feedbackTypes[feedbackType]
+  const [comment, setComment] = useState('')
 
   const handleScreenshotTook = (screenshot: string | null) => {
     setScreenshot(screenshot)
+  }
+
+  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value)
+  }
+
+  const handleSubmitFeedback = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    console.log({
+      screenshot,
+      comment
+    })
   }
 
   return (
@@ -43,10 +57,11 @@ export function FeedbackContentStep ({
 
         <CloseButton />
       </header>
-      <form className="my-4 w-full">
+      <form className="my-4 w-full" onSubmit={handleSubmitFeedback}>
         <textarea
           className="min-w-[304px] w-full min-h-[112px] text-sm placeholder-zinc-400 text-zinc-100 border-zinc-600 bg-transparent rounded-md focus:border-brand-500 focus:ring-brand-500 focus:ring-1 focus:outline-none resize-none scrollbar scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin"
           placeholder="Conte com detalhes o que está acontecendo..."
+          onChange={handleCommentChange}
         />
 
         <footer className="flex gap-2 mt-3">
