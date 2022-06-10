@@ -1,11 +1,14 @@
-import { CloseButton } from "../../close-button"
-import { ArrowLeft } from "phosphor-react"
-
 import { ChangeEvent, FormEvent, useState } from "react"
 
-import  { FeedbackType, feedbackTypes } from '../'
+import { ArrowLeft } from "phosphor-react"
+
+import { CloseButton } from "../../close-button"
 
 import { ScreenshotButton } from "../screenshot-button"
+
+import { api } from "../../../lib/api"
+
+import  { FeedbackType, feedbackTypes } from '../'
 
 type Props = {
   feedbackType: FeedbackType
@@ -30,15 +33,20 @@ export function FeedbackContentStep ({
     setComment(e.target.value)
   }
 
-  const handleSubmitFeedback = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitFeedback = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log({
-      screenshot,
-      comment
-    })
+   try {
+      const res = await api.post('/feedbacks', {
+        type: feedbackType,
+        screenshot,
+        comment
+      })
 
-    onFeedbackSent()
+     onFeedbackSent()
+   } catch (error) {
+
+   }
   }
 
   return (
